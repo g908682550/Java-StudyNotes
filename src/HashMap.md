@@ -233,7 +233,7 @@ final float loadFactor
 
 ### 成员方法
 
-#### 增加方法（putVal）
+#### 增加方法（put）
 
 1）先判断数组是否未初始化，如果没有初始化，则进行一次初始化操作（扩容），同时将数组大小赋给n
 
@@ -401,6 +401,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                 Node<K,V> e;
                 if ((e = oldTab[j]) != null) {
                     oldTab[j] = null;
+                    //如果当前索引只有一个节点
                     if (e.next == null)
                         newTab[e.hash & (newCap - 1)] = e;
                     else if (e instanceof TreeNode)
@@ -439,5 +440,136 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
             }
         }
         return newTab;
+~~~
+
+#### 删除方法（remove）
+
+~~~java
+    public boolean remove(Object key, Object value) {
+        return removeNode(hash(key), key, value, true, true) != null;
+    }
+    final Node<K,V> removeNode(int hash, Object key, Object value,
+                               boolean matchValue, boolean movable) {
+        Node<K,V>[] tab; Node<K,V> p; int n, index;
+        if ((tab = table) != null && (n = tab.length) > 0 &&
+            (p = tab[index = (n - 1) & hash]) != null) {
+            Node<K,V> node = null, e; K k; V v;
+            //初始节点为要找的节点，赋值给node
+            if (p.hash == hash &&
+                ((k = p.key) == key || (key != null && key.equals(k))))
+                node = p;
+            //向下找节点
+            else if ((e = p.next) != null) {
+                if (p instanceof TreeNode)
+                    node = ((TreeNode<K,V>)p).getTreeNode(hash, key);
+                else {
+                    do {
+                        if (e.hash == hash &&
+                            ((k = e.key) == key ||
+                             (key != null && key.equals(k)))) {
+                            node = e;
+                            break;
+                        }
+                        p = e;
+                    } while ((e = e.next) != null);
+                }
+            }
+            //删除操作
+            if (node != null && (!matchValue || (v = node.value) == value ||
+                                 (value != null && value.equals(v)))) {
+                if (node instanceof TreeNode)
+                    ((TreeNode<K,V>)node).removeTreeNode(this, tab, movable);
+                else if (node == p)
+                    tab[index] = node.next;
+                else
+                    p.next = node.next;
+                ++modCount;
+                --size;
+                afterNodeRemoval(node);
+                return node;
+            }
+        }
+        return null;
+    }
+~~~
+
+#### 查找方法（get）
+
+~~~java
+    public V get(Object key) {
+        Node<K,V> e;
+        return (e = getNode(hash(key), key)) == null ? null : e.value;
+    }
+    final Node<K,V> getNode(int hash, Object key) {
+        Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
+        if ((tab = table) != null && (n = tab.length) > 0 &&
+            (first = tab[(n - 1) & hash]) != null) {
+            if (first.hash == hash && // always check first node
+                ((k = first.key) == key || (key != null && key.equals(k))))
+                return first;
+            if ((e = first.next) != null) {
+                if (first instanceof TreeNode)
+                    return ((TreeNode<K,V>)first).getTreeNode(hash, key);
+                do {
+                    if (e.hash == hash &&
+                        ((k = e.key) == key || (key != null && key.equals(k))))
+                        return e;
+                } while ((e = e.next) != null);
+            }
+        }
+        return null;
+    }
+
+~~~
+
+#### 遍历HashMap集合的几种方式
+
+1、分别遍历Key和Values
+
+~~~java
+for(String key:map.keySet()){
+    System.out.println(key);
+}
+for(Object value:map.values()){
+    System.out.println(value);
+}
+~~~
+
+2、迭代器（增强for循环）
+
+~~~java
+Iterator<Map.Entry<String, Integer>> iterator = map.entrySet().iterator();
+while(iterator.hasNext()){
+    Map.Entry<String, Integer> next = iterator.next();
+    System.out.println(next.getKey()+":"+next.getValue());
+}
+~~~
+
+3、通过get方式（不建议使用）
+
+~~~java
+Set<String> keySet=map.keySet();
+for(String str:keySet){
+    System.out.println(str+"==="+map.get(str))
+}
+~~~
+
+4、jdk8以后采用Map接口的默认方法forEach
+
+~~~java
+map.forEach((k,v)->{
+    System.out.println(k+":"+v);
+});
+~~~
+
+## HashMap的初始化设计
+
+为了尽可能的避免hashmap的扩容操作，提高性能，如果明确知道存储的数据量大小I时，初始化值如下
+
+~~~java
+Map<String,String> map=new HashMap<>(initialCapacity);
+
+initialCapacity=(需要存储的元素个数/负载因子)+1
+
 ~~~
 
