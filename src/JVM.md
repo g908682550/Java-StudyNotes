@@ -2,13 +2,14 @@
 
 Java  Virtual Machine运行在操作系统之上的，它与硬件没有直接的交互
 
-![image-20191110143505874](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110143505874.png)
+![image-20191110143505874](JVM.assets/image-20191110143505874.png)
 
 ## 类加载器ClassLoader
 
 负责加载class文件，class文件在**文件开头由特定的文件标示**，将class文件字节码内容加载到内存中，并将这些内容转换成方法区中的运行时数据结构并且ClassLoader只负责class文件的加载，至于它是否可以运行，则由Execution Engine决定
 
-![image-20191110145926517](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110145926517.png)
+![image-20191110145926517](JVM.assets/image-20191110145926517.png)
+
 
 ## 四种类加载器（3+1）
 
@@ -24,7 +25,7 @@ Java  Virtual Machine运行在操作系统之上的，它与硬件没有直接�
 
 java.lang.ClassLoader的子类，用户可以定制类的加载的方式
 
-![image-20191110151516789](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110151516789.png)
+![image-20191110151516789](JVM.assets/image-20191110151516789.png)
 
 ## 双亲委派
 
@@ -40,7 +41,7 @@ Execution Engine执行引擎负责解释命令，提交操作系统执行。
 
 ## 本地方法接口与本地方法栈
 
-![image-20191110153015364](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110153015364.png)
+![image-20191110153015364](JVM.assets/image-20191110153015364.png)
 
 ## PC寄存器
 
@@ -78,11 +79,12 @@ Execution Engine执行引擎负责解释命令，提交操作系统执行。
 
 StackOverFlowError
 
-![image-20191110165517629](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110165517629.png)
+![image-20191110165517629](JVM.assets/image-20191110165517629.png)
+
 
 ## 栈+堆+方法区的交互关系
 
-![image-20191110170404535](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110170404535.png)
+![image-20191110170404535](JVM.assets/image-20191110170404535.png)
 
 HotSpot是使用指针的方式来访问对象
 
@@ -102,13 +104,13 @@ reference存储的就直接是对象的地址
 
 java8将永久区换为元空间
 
-![image-20191110171215312](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110171215312.png)
+![image-20191110171215312](JVM.assets/image-20191110171215312.png)
 
-![image-20191110172543528](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110172543528.png)
+![image-20191110172543528](JVM.assets/image-20191110172543528.png)
 
 ## 内存分配与回收策略
 
-![image-20191110195026925](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110195026925.png)
+![image-20191110195026925](JVM.assets/image-20191110195026925.png)
 
 复制->清空->交换
 
@@ -122,7 +124,7 @@ java8将永久区换为元空间
 
 **Java7**
 
-![image-20191110200543237](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110200543237.png)
+![image-20191110200543237](JVM.assets/image-20191110200543237.png)
 
 
 
@@ -130,7 +132,7 @@ java8将永久区换为元空间
 
 **Java8**
 
-![image-20191110200912755](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191110200912755.png)
+![image-20191110200912755](JVM.assets/image-20191110200912755.png)
 
 ## 元空间和永生代
 
@@ -161,15 +163,15 @@ java8将永久区换为元空间
 
 ## YoungGC
 
-![image-20191111204424465](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191111204424465.png)
+![image-20191111204424465](JVM.assets/image-20191111204424465.png)
 
 ## FullGC
 
-![image-20191111204510405](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191111204510405.png)
+![image-20191111204510405](img/image-20191111204510405.png)
 
-![image-20191111204557611](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191111204557611.png)
+![image-20191111204557611](JVM.assets/image-20191111204557611.png)
 
-![image-20191111204615739](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191111204615739.png)
+![image-20191111204615739](JVM.assets/image-20191111204615739.png)
 
 ## GC
 
@@ -189,13 +191,13 @@ Java 虚拟机使用该算法来判断对象是否可被回收，GC Roots 一般
 3、方法区中类静态属性引用的对象
 4、方法区中的常量引用的对象
 
-![image-20191111221444919](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191111221444919.png)
+![image-20191111221444919](JVM.assets/image-20191111221444919.png)
 
 ## GC四大算法
 
 ### 总体概述
 
-![image-20191111204853763](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191111204853763.png)
+![image-20191111204853763](JVM.assets/image-20191111204853763.png)
 
 JVM在进行GC时，并非每次都对上面三个内存区域一起回收的，大部分时候回收的都是指新生代
 
@@ -219,7 +221,7 @@ JVM在进行GC时，并非每次都对上面三个内存区域一起回收的，
 
 ### 基本不动元空间
 
-![image-20191111205719834](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191111205719834.png)
+![image-20191111205719834](JVM.assets/image-20191111205719834.png)
 
 ### 复制算法（Copying）
 
@@ -267,7 +269,7 @@ HotSpot JVM把年轻代分为了三部分：一个Eden区和两个Survior区（�
 
 #### 原理
 
-![image-20191111215619588](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191111215619588.png)
+![image-20191111215619588](JVM.assets/image-20191111215619588.png)
 
 #### 劣势
 
@@ -275,19 +277,19 @@ HotSpot JVM把年轻代分为了三部分：一个Eden区和两个Survior区（�
 
 ### 总结
 
-![image-20191111220016380](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191111220016380.png)
+![image-20191111220016380](JVM.assets/image-20191111220016380.png)
 
 # JMM（Java内存模型）
 
 JMM（Java内存模型Java Memory Model，简称JMM）本身是一种抽象的概念并不真实存在，它描述的使一组规则或规范，通过这组规范定义了程序中各个变量（包括实例字段、静态字段和构成数组对象的元素）的访问方式
 
-![image-20191112163259076](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191112163259076.png)
+![image-20191112163259076](JVM.assets/image-20191112163259076.png)
 
 
 
 **优先级**：静态块>构造块>构造方法
 
-![image-20191112170544081](C:\Users\gy136\AppData\Roaming\Typora\typora-user-images\image-20191112170544081.png)
+![image-20191112170544081](img/image-20191112170544081.png)
 
 ## 可见性
 
